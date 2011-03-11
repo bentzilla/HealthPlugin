@@ -83,15 +83,17 @@ public class Health extends JavaPlugin {
         String subCommand = args[0].toLowerCase();
         System.out.println("Sibcom: " + subCommand);
 
-        boolean hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.admin");
-
-        if (!user.isOp() && !hasPermission) {
-            sender.sendMessage("You do not have permission to use this command.");
-            return true;
-        }
+        boolean hasPermission = false;
 
         if (subCommand.equals("chathealth")) {
-               	
+        	
+        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.chathealth");	
+
+            if (!hasPermission) {
+                sender.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+            
         	System.out.println("chathealth, there are current: " + args.length + " args");
         	String rpgstyle = "off";
             if (args.length == 2){
