@@ -67,10 +67,6 @@ public class Health extends JavaPlugin {
 			
 		String command = "/" + commandLabel + " " + join(args, 0);
 		
-		System.out.println("Command = " + command);
-    	System.out.println("chathealth, there are current: " + args.length + " args");
-    	System.out.println(command.toLowerCase());
-		
 		if (!command.toLowerCase().contains("/hp ")) {
             return false;
         }
@@ -81,7 +77,6 @@ public class Health extends JavaPlugin {
 
         Player user = (Player) sender;
         String subCommand = args[0].toLowerCase();
-        System.out.println("Sibcom: " + subCommand);
 
         boolean hasPermission = false;
 
@@ -94,7 +89,6 @@ public class Health extends JavaPlugin {
                 return true;
             }
             
-        	System.out.println("chathealth, there are current: " + args.length + " args");
         	String rpgstyle = "off";
             if (args.length == 2){
             	if (args[1].toLowerCase().equals("on")){
