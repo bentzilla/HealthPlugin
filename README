@@ -4,3 +4,5 @@ Bukkit: 451
 CraftBukkit: 531
 Permissions: 2.5.4
 - hp.chathealth - "Allows users to use the command /hp chathealth"
+- hp.nohealth - "Allows users to use the command /hp disablehealth"
+- hp.nohealth.admin - "Allows users to use the command /hp disablehealth (player)"

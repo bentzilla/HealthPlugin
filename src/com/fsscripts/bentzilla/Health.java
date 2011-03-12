@@ -81,6 +81,7 @@ public class Health extends JavaPlugin {
         String subCommand = args[0].toLowerCase();
 
         boolean hasPermission = false;
+        boolean hasAdminPermission = false;
 
         if (subCommand.equals("chathealth")) {
         	
@@ -116,7 +117,8 @@ public class Health extends JavaPlugin {
         }
         if (subCommand.equals("disablehealth")) {
         	
-        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth");	
+        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth");
+        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth.admin");
 
             if (!hasPermission) {
                 sender.sendMessage("You do not have permission to use this command.");
@@ -124,12 +126,16 @@ public class Health extends JavaPlugin {
             }
            
             if (args.length == 2){
+                if (!hasAdminPermission) {
+                    sender.sendMessage("You do not have permission to use this command.");
+                    return true;
+                }
             	for(Player P : this.getServer().matchPlayer(args[1])){
             		toggleDamageHealth(P);
             		return true;
             	}
             	user.sendMessage("Player: " + args[1].toString() + " not found.");
-            	return false;
+            	return true;
             }else if (args.length == 1){
             	toggleDamageHealth(user);
             	return true;
