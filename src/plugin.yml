@@ -1,6 +1,6 @@
 name: HealthPlugin
 main: com.fsscripts.bentzilla.Health
-version: 1.0
+version: 1.2
 website: http://forums.bukkit.org
 authors:
   - bentzilla
@@ -9,4 +9,5 @@ commands:
   hp:
     description: Main HealthPlugin Command
     usage: |
-           /hp chathealth <rpgstyle>
+           /hp chathealth (rpgstyle)
+           /hp disablehealth (player)

@@ -20,11 +20,13 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Health extends JavaPlugin {
     
-	private String HVersion = "1.0";
+	private String HVersion = "1.2";
 	
     public final static HashMap<Player, String> chatHealthUsers = new HashMap<Player,String>(); 
+    public final static HashMap<Player, Boolean> damageHealthUsers = new HashMap<Player,Boolean>(); 
+    
     private final HPlayerChatListener ThePlayerListener = new HPlayerChatListener(this);
-    //private final HEntityListener TheEntityListener = new HEntityListener(this);
+    private final HEntityListener TheEntityListener = new HEntityListener(this);
     private Permissions HPermissions = null;
     
 	public void onDisable() {
@@ -35,9 +37,9 @@ public class Health extends JavaPlugin {
 		setupPermissions();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_CHAT, this.ThePlayerListener, Event.Priority.Normal, this);
-		//pm.registerEvent(Event.Type.ENTITY_DAMAGED, this.TheEntityListener, Event.Priority.Highest, this);
+		pm.registerEvent(Event.Type.ENTITY_DAMAGED, this.TheEntityListener, Event.Priority.Highest, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
-		System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
+		System.out.println(pdfFile.getName() + " version " + HVersion + " is enabled!");
 	}
 	
     private void setupPermissions() {
@@ -112,6 +114,27 @@ public class Health extends JavaPlugin {
 
         	return true;
         }
+        if (subCommand.equals("disablehealth")) {
+        	
+        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth");	
+
+            if (!hasPermission) {
+                sender.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+           
+            if (args.length == 2){
+            	for(Player P : this.getServer().matchPlayer(args[1])){
+            		toggleDamageHealth(P);
+            		return true;
+            	}
+            	user.sendMessage("Player: " + args[1].toString() + " not found.");
+            	return false;
+            }else if (args.length == 1){
+            	toggleDamageHealth(user);
+            	return true;
+            }
+        }
         return false;
 	 }
 	   
@@ -126,6 +149,21 @@ public class Health extends JavaPlugin {
 	    	} else {
 	    		Health.chatHealthUsers.put(player, style);
 	    		player.sendMessage("Health in Chat ENABLED");
+	    	}		
+	    	return true;
+	    }
+	    
+	    public static boolean damageHealthEnabled(Player player) {
+			return damageHealthUsers.containsKey(player);
+		}
+	    
+	    public boolean toggleDamageHealth(Player player){
+	    	if(damageHealthEnabled(player)) {
+	    		Health.damageHealthUsers.remove(player);
+	    		player.sendMessage("Health ENABLED");
+	    	} else {
+	    		Health.damageHealthUsers.put(player, null);
+	    		player.sendMessage("Health DISABLED");
 	    	}		
 	    	return true;
 	    }
