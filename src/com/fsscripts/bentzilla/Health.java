@@ -91,7 +91,7 @@ public class Health extends JavaPlugin {
         boolean hasPermission = false;
         boolean hasAdminPermission = false;
 
-        if (subCommand.equals("chathealth")) {
+        if (subCommand.equals("chathealth") || subCommand.equals("ch")) {
         	
         	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.chathealth");	
 
@@ -123,7 +123,7 @@ public class Health extends JavaPlugin {
 
         	return true;
         }
-        if (subCommand.equals("disablehealth")) {
+        if (subCommand.equals("disablehealth") || subCommand.equals("dh")) {
         	
         	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth");
         	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth.admin");
