@@ -20,12 +20,13 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Health extends JavaPlugin {
     
-	private String HVersion = "1.2";
+	private String HVersion = "1.3";
 	
     public final static HashMap<Player, String> chatHealthUsers = new HashMap<Player,String>(); 
     public final static HashMap<Player, Boolean> damageHealthUsers = new HashMap<Player,Boolean>(); 
     
-    private final HPlayerChatListener ThePlayerListener = new HPlayerChatListener(this);
+    private final HPlayerChatListener ThePlayerChatListener = new HPlayerChatListener(this);
+    private final HPlayerListener ThePlayerListener = new HPlayerListener(this);
     private final HEntityListener TheEntityListener = new HEntityListener(this);
     private Permissions HPermissions = null;
     
@@ -36,7 +37,8 @@ public class Health extends JavaPlugin {
 	public void onEnable() {
 		setupPermissions();
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvent(Event.Type.PLAYER_CHAT, this.ThePlayerListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.PLAYER_CHAT, this.ThePlayerChatListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.PLAYER_TELEPORT, this.ThePlayerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED, this.TheEntityListener, Event.Priority.Highest, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println(pdfFile.getName() + " version " + HVersion + " is enabled!");
@@ -65,6 +67,12 @@ public class Health extends JavaPlugin {
 		 
 		 if (!(sender instanceof Player)) {
 				return false;
+		 }
+		 
+		 boolean CanUse = this.HPermissions == null ? false : Permissions.Security.permission((Player) sender, "hp.use");
+		 if (!CanUse){
+             sender.sendMessage("You do not have permission to use this command.");
+             return true;
 		 }
 			
 		String command = "/" + commandLabel + " " + join(args, 0);

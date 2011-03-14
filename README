@@ -3,6 +3,7 @@ HealthPlugin is a plugin which performs various health related mods.
 Bukkit: 451
 CraftBukkit: 531
 Permissions: 2.5.4
+- hp.use - "Must have to be able to use HealthPlugin"
 - hp.chathealth - "Allows users to use the command /hp chathealth"
 - hp.nohealth - "Allows users to use the command /hp disablehealth"
 - hp.nohealth.admin - "Allows users to use the command /hp disablehealth (player)"

@@ -6,7 +6,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import com.nijikokun.bukkit.Permissions.Permissions;
+//import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
  * Handle events for all Entity related events
@@ -15,7 +15,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class HEntityListener extends EntityListener {
     private final Health plugin;
-    private Permissions HPermissions = null;
+    //private Permissions HPermissions = null;
 
     public HEntityListener(Health instance) {
         plugin = instance;
