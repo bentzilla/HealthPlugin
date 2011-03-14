@@ -20,7 +20,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Health extends JavaPlugin {
     
-	private String HVersion = "1.3";
+	private String HVersion = "1.4";
 	
     public final static HashMap<Player, String> chatHealthUsers = new HashMap<Player,String>(); 
     public final static HashMap<Player, Boolean> damageHealthUsers = new HashMap<Player,Boolean>(); 
@@ -41,7 +41,7 @@ public class Health extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_TELEPORT, this.ThePlayerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED, this.TheEntityListener, Event.Priority.Highest, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
-		System.out.println(pdfFile.getName() + " version " + HVersion + " is enabled!");
+		System.out.println(pdfFile.getName() + " version " + HVersion + " is enabled! (bentzilla)");
 	}
 	
     private void setupPermissions() {
@@ -146,6 +146,62 @@ public class Health extends JavaPlugin {
             	return true;
             }else if (args.length == 1){
             	toggleDamageHealth(user);
+            	return true;
+            }
+        }
+        if (subCommand.equals("heal") || subCommand.equals("he")) {
+        	
+        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.heal");
+        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.heal.admin");
+
+            if (!hasPermission) {
+                sender.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+           
+            if (args.length == 2){
+                if (!hasAdminPermission) {
+                    sender.sendMessage("You do not have permission to use this command.");
+                    return true;
+                }
+            	for(Player P : this.getServer().matchPlayer(args[1])){
+            		P.setHealth(20);
+            		P.sendMessage("You have been healed by: " + user.getName().toString());
+            		return true;
+            	}
+            	user.sendMessage("Player: " + args[1].toString() + " not found.");
+            	return true;
+            } else if (args.length == 1){
+            	user.setHealth(20);
+        		user.sendMessage("You have been healed");
+            	return true;
+            }
+        }
+        if (subCommand.equals("harm") || subCommand.equals("ha")) {
+        	
+        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.harm");
+        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.harm.admin");
+
+            if (!hasPermission) {
+                sender.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+           
+            if (args.length == 3){
+                if (!hasAdminPermission) {
+                    sender.sendMessage("You do not have permission to use this command.");
+                    return true;
+                }
+            	for(Player P : this.getServer().matchPlayer(args[2])){
+            		P.damage(Integer.parseInt(args[1]));
+            		P.sendMessage("You have been harmed " + args[1] + " hitpoints by: " + user.getName().toString());
+            		return true;
+            	}
+            	user.sendMessage("Player: " + args[2].toString() + " not found.");
+            	return true;
+            } else if (args.length == 2){
+            	user.damage(Integer.parseInt(args[1]));
+        		user.sendMessage("You have been harmed " + args[1] + " hitpoints");
             	return true;
             }
         }

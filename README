@@ -7,3 +7,7 @@ Permissions: 2.5.4
 - hp.chathealth - "Allows users to use the command /hp chathealth"
 - hp.nohealth - "Allows users to use the command /hp disablehealth"
 - hp.nohealth.admin - "Allows users to use the command /hp disablehealth (player)"
+- hp.heal - "Allows users to use the command /hp heal"
+- hp.heal.admin - "Allows users to use the command /hp heal (player)"
+- hp.harm - "Allows users to use the command /hp harm <amount>"
+- hp.harm.admin - "Allows users to use the command /hp harm <amount> (player)"
