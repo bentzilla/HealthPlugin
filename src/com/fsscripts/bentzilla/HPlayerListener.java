@@ -1,9 +1,6 @@
 package com.fsscripts.bentzilla;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -13,7 +10,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
  * @author bentzilla
  */
 public class HPlayerListener extends PlayerListener {
-    private final Health plugin;
+	private final Health plugin;
     private Permissions HPermissions = null;
 
     public HPlayerListener(Health instance) {
