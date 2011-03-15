@@ -20,11 +20,9 @@ public class HPlayerListener extends PlayerListener {
     @Override
     public void onPlayerTeleport(PlayerMoveEvent event) {
     	Player player = event.getPlayer();
-    	
-    	boolean hasUsePermission = this.HPermissions == null ? false : Permissions.Security.permission(player, "hp.use");
-    	boolean hasChatPermission = this.HPermissions == null ? false : Permissions.Security.permission(player, "hp.chathealth");
-    	boolean hasHealthPermission = this.HPermissions == null ? false : Permissions.Security.permission(player, "hp.nohealth");
-    	
+    	boolean hasUsePermission = HPermissions.Security.permission(player, "hp.use");
+    	boolean hasChatPermission = HPermissions.Security.permission(player, "hp.chathealth");
+    	boolean hasHealthPermission = HPermissions.Security.permission(player, "hp.nohealth");
     	if (!hasUsePermission) {
 	    	if(Health.hpChatEnabled(player)) {
 	    		Health.chatHealthUsers.remove(player);

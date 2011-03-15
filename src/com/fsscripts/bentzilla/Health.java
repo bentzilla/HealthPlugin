@@ -20,7 +20,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Health extends JavaPlugin {
     
-	private String HVersion = "1.4";
+	private String HVersion = "1.5";
 	
     public final static HashMap<Player, String> chatHealthUsers = new HashMap<Player,String>(); 
     public final static HashMap<Player, Boolean> damageHealthUsers = new HashMap<Player,Boolean>(); 
@@ -69,7 +69,7 @@ public class Health extends JavaPlugin {
 				return false;
 		 }
 		 
-		 boolean CanUse = this.HPermissions == null ? false : Permissions.Security.permission((Player) sender, "hp.use");
+		 boolean CanUse = HPermissions.Security.permission((Player) sender, "hp.use");
 		 if (!CanUse){
              sender.sendMessage("You do not have permission to use this command.");
              return true;
@@ -93,7 +93,7 @@ public class Health extends JavaPlugin {
 
         if (subCommand.equals("chathealth") || subCommand.equals("ch")) {
         	
-        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.chathealth");	
+        	hasPermission = HPermissions.Security.permission(user, "hp.chathealth");	
 
             if (!hasPermission) {
                 sender.sendMessage("You do not have permission to use this command.");
@@ -125,8 +125,8 @@ public class Health extends JavaPlugin {
         }
         if (subCommand.equals("disablehealth") || subCommand.equals("dh")) {
         	
-        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth");
-        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.nohealth.admin");
+        	hasPermission = HPermissions.Security.permission(user, "hp.nohealth");
+        	hasAdminPermission = HPermissions.Security.permission(user, "hp.nohealth.admin");
 
             if (!hasPermission) {
                 sender.sendMessage("You do not have permission to use this command.");
@@ -151,8 +151,8 @@ public class Health extends JavaPlugin {
         }
         if (subCommand.equals("heal") || subCommand.equals("he")) {
         	
-        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.heal");
-        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.heal.admin");
+        	hasPermission = HPermissions.Security.permission(user, "hp.heal");
+        	hasAdminPermission = HPermissions.Security.permission(user, "hp.heal.admin");
 
             if (!hasPermission) {
                 sender.sendMessage("You do not have permission to use this command.");
@@ -179,8 +179,8 @@ public class Health extends JavaPlugin {
         }
         if (subCommand.equals("harm") || subCommand.equals("ha")) {
         	
-        	hasPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.harm");
-        	hasAdminPermission = this.HPermissions == null ? false : Permissions.Security.permission(user, "hp.harm.admin");
+        	hasPermission = HPermissions.Security.permission(user, "hp.harm");
+        	hasAdminPermission = HPermissions.Security.permission(user, "hp.harm.admin");
 
             if (!hasPermission) {
                 sender.sendMessage("You do not have permission to use this command.");
