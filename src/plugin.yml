@@ -1,6 +1,6 @@
 name: HealthPlugin
 main: com.fsscripts.bentzilla.Health
-version: 1.5
+version: 1.6
 website: http://forums.bukkit.org
 authors:
   - bentzilla
@@ -13,3 +13,4 @@ commands:
            /hp disablehealth (player)
            /hp heal (player)
            /hp harm <amount> (player)
+           /hp regen <amount> <interval>

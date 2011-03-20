@@ -20,7 +20,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class Health extends JavaPlugin {
     
-	private String HVersion = "1.5";
+	private String HVersion = "1.6";
 	
     public final static HashMap<Player, String> chatHealthUsers = new HashMap<Player,String>(); 
     public final static HashMap<Player, Boolean> damageHealthUsers = new HashMap<Player,Boolean>(); 
@@ -28,20 +28,28 @@ public class Health extends JavaPlugin {
     private final HPlayerChatListener ThePlayerChatListener = new HPlayerChatListener(this);
     private final HPlayerListener ThePlayerListener = new HPlayerListener(this);
     private final HEntityListener TheEntityListener = new HEntityListener(this);
+    private final HRegen TheHRegen = new HRegen(this);
     private Permissions HPermissions = null;
     
 	public void onDisable() {
+		if (TheHRegen.hActive) {
+			TheHRegen.StopHRegen();
+		}
 		System.out.println("HealthPlugin v" + HVersion + " Disabled");
 	}
 
 	public void onEnable() {
 		setupPermissions();
 		PluginManager pm = getServer().getPluginManager();
+		
 		pm.registerEvent(Event.Type.PLAYER_CHAT, this.ThePlayerChatListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_TELEPORT, this.ThePlayerListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.ENTITY_DAMAGED, this.TheEntityListener, Event.Priority.Highest, this);
+		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println(pdfFile.getName() + " version " + HVersion + " is enabled! (bentzilla)");
+		
+		//TheHRegen.StartHRegen(0, 0);
 	}
 	
     private void setupPermissions() {
@@ -202,6 +210,24 @@ public class Health extends JavaPlugin {
             } else if (args.length == 2){
             	user.damage(Integer.parseInt(args[1]));
         		user.sendMessage("You have been harmed " + args[1] + " hitpoints");
+            	return true;
+            }
+        }
+        if (subCommand.equals("regen")) {
+        	
+        	hasPermission = HPermissions.Security.permission(user, "hp.regen.set");
+
+            if (!hasPermission) {
+                sender.sendMessage("You do not have permission to use this command.");
+                return true;
+            }
+           
+            if (args.length == 3){
+        		if (TheHRegen.hActive) {
+        			TheHRegen.StopHRegen();
+        		}
+        		TheHRegen.StartHRegen(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            	user.sendMessage("Regenerate " + args[1].toString() + " hitpoints every " + args[2].toString() + " seconds");
             	return true;
             }
         }
